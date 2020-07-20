@@ -40,4 +40,11 @@ public interface CategoryService {
 	 * @return category - nếu cập nhật thành công, null - nếu cập nhật không thành công
 	 */
 	Category save(Category category);
+
+	/**
+	 * Xóa thể loại theo Id
+	 * @param id Integer - Id của thể loại cần xóa
+	 * @return true - nếu xóa thành công / false - nếu không xóa thành công
+	 */
+	boolean deleteCategoryById(Integer id);
 }

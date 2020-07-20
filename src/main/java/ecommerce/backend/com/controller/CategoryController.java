@@ -43,7 +43,7 @@ public class CategoryController {
     }
 
     @PutMapping(value = "/category/{id}")
-    public ResponseEntity<Category> updateCategoryById(@PathVariable("id") Integer id,@Valid @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategoryById(@PathVariable("id") Integer id, @Valid @RequestBody Category category) {
         Optional<Category> categoryOptional = categoryService.findCategoryById(id);
         if (categoryOptional.isPresent()) {
             return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
@@ -51,5 +51,16 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-//    @PostMapping(value = )
+    @PostMapping(value = "/category")
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
+        return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/category/{id}")
+    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("id") Integer id) {
+        if (categoryService.deleteCategoryById(id))
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+    }
 }

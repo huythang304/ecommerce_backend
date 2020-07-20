@@ -1,10 +1,13 @@
 package ecommerce.backend.com.model;
 
+import ecommerce.backend.com.util.DateUtils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -25,6 +28,7 @@ public class Category implements Serializable {
     private Integer id;
 
     @Column(name = "name", unique = true, nullable = false, length = 150)
+        @NotBlank(message = "Tên Thể Loại không được để trống")
     private String name;
 
     @Column(name = "metaTitle", unique = true, nullable = false, length = 150)
@@ -38,4 +42,13 @@ public class Category implements Serializable {
     @Column(name = "status")
     private Integer status;
 
+    @PrePersist
+    public void prePersist() {
+        if (createDate == null) {
+            createDate = DateUtils.getCurrentDate();
+        }
+        if (status == null) {
+            status = 1;
+        }
+    }
 }

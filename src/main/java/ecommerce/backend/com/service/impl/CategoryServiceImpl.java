@@ -40,4 +40,14 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.save(category);
     }
 
+    @Override
+    public boolean deleteCategoryById(Integer id) {
+        try {
+            categoryRepository.deleteById(id);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
 }
