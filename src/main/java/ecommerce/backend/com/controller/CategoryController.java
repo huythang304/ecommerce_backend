@@ -3,6 +3,7 @@ package ecommerce.backend.com.controller;
 import ecommerce.backend.com.model.Category;
 import ecommerce.backend.com.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +29,14 @@ public class CategoryController {
     }
 
     @GetMapping(value = "/categories")
-    public ResponseEntity<?> getAllCategory(
-            @RequestParam String search,
+    public ResponseEntity<Page<Category>> getAllCategory(
+            @RequestParam(required = false) String search,            
+            @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "1") Integer page) {
-        return new ResponseEntity<>("Hello", HttpStatus.OK);
+                if(search == null || search.isEmpty() ){
+                    return new ResponseEntity<>(categoryService.findAllByPage(page, size),HttpStatus.OK);
+                }else
+                    return new ResponseEntity<>(categoryService.findAllByNameAndPage(search, page, size), HttpStatus.OK);
     }
 
     @GetMapping(value = "/category/{id}")

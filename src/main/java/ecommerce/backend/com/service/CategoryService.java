@@ -5,6 +5,8 @@ import ecommerce.backend.com.model.Category;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+
 /**
  * @author Huy Thắng on 26/06/2020
  * @project ecommerce_backend
@@ -47,4 +49,21 @@ public interface CategoryService {
 	 * @return true - nếu xóa thành công / false - nếu không xóa thành công
 	 */
 	boolean deleteCategoryById(Integer id);
+
+	/**
+	 * Tìm danh sách thể loại theo phân trang
+	 * @param page Integer Số trang
+	 * @param size Integer Số lượng thể loại trong một trang
+	 * @return Page<Category> 
+	 */
+	Page<Category> findAllByPage(Integer page, Integer size);
+
+	/**
+	 * Tìm danh sách thể loại theo từ khóa tìm kiếm và phân trang
+	 * @param search String từ khóa tìm kiếm
+	 * @param page Integer Số trang
+	 * @param size Integer Số lượng thể loại trong một trang
+	 * @return Page<Category>1
+	 */
+	Page<Category> findAllByNameAndPage(String search, Integer page, Integer size);
 }

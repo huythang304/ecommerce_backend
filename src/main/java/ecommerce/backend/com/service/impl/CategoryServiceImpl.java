@@ -4,6 +4,9 @@ import ecommerce.backend.com.model.Category;
 import ecommerce.backend.com.repository.CategoryRepository;
 import ecommerce.backend.com.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +51,18 @@ public class CategoryServiceImpl implements CategoryService {
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    @Override
+    public Page<Category> findAllByPage(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return categoryRepository.findAllOrderByIdAsc(pageable);
+    }
+
+    @Override
+    public Page<Category> findAllByNameAndPage(String search, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return categoryRepository.findByNameContainingOrderByIdAsc(search, pageable);
     }
 
 }
