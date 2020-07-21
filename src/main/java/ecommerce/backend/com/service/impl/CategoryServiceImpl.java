@@ -20,8 +20,12 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
+    private final CategoryRepository categoryRepository;
+
     @Autowired
-    private CategoryRepository categoryRepository;
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public List<Category> findAll() {
@@ -56,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Page<Category> findAllByPage(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        return categoryRepository.findAllOrderByIdAsc(pageable);
+        return categoryRepository.findByOrderByIdAsc(pageable);
     }
 
     @Override

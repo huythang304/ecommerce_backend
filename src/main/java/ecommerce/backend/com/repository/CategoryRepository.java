@@ -22,7 +22,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 	List<Category> findByStatusOrderByIdAsc(Integer status);
 
-	Page<Category> findAllOrderByIdAsc(Pageable pageable);
+	Page<Category> findByOrderByIdAsc(Pageable pageable);
 
 	Page<Category> findByNameContainingOrderByIdAsc(String search, Pageable pageable);
 

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,14 +31,20 @@ public class CategoryController {
     }
 
     @GetMapping(value = "/categories")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Page<Category>> getAllCategory(
-            @RequestParam(required = false) String search,            
+            @RequestParam(required = false) String search,
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "1") Integer page) {
-                if(search == null || search.isEmpty() ){
-                    return new ResponseEntity<>(categoryService.findAllByPage(page, size),HttpStatus.OK);
-                }else
-                    return new ResponseEntity<>(categoryService.findAllByNameAndPage(search, page, size), HttpStatus.OK);
+        if (search == null || search.isEmpty()) {
+            return new ResponseEntity<>(categoryService.findAllByPage(page, size), HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(categoryService.findAllByNameAndPage(search, page, size), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/categories/active")
+    public ResponseEntity<List<Category>> getAllActiveCategory() {
+        return new ResponseEntity<>(categoryService.findAllByStatus(1), HttpStatus.OK);
     }
 
     @GetMapping(value = "/category/{id}")
@@ -48,6 +56,7 @@ public class CategoryController {
     }
 
     @PutMapping(value = "/category/{id}")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Category> updateCategoryById(@PathVariable("id") Integer id, @Valid @RequestBody Category category) {
         Optional<Category> categoryOptional = categoryService.findCategoryById(id);
         if (categoryOptional.isPresent()) {
@@ -57,11 +66,13 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/category")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/category/{id}")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("id") Integer id) {
         if (categoryService.deleteCategoryById(id))
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

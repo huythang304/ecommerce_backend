@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,7 +27,7 @@ public class Category implements Serializable {
     private Integer id;
 
     @Column(name = "name", unique = true, nullable = false, length = 150)
-        @NotBlank(message = "Tên Thể Loại không được để trống")
+    @NotBlank(message = "Tên Thể Loại không được để trống")
     private String name;
 
     @Column(name = "metaTitle", unique = true, nullable = false, length = 150)
