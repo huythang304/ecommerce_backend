@@ -15,4 +15,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
     private ProductRepository productRepository;
+
+    @Override
+    public Page<Category> findAllByCategoryIdAndStatus(Integer categoryId,Integer page, Integer size, Integer status){
+
+    }
 }
