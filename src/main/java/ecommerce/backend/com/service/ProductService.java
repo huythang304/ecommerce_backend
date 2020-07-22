@@ -1,6 +1,5 @@
 package ecommerce.backend.com.service;
 
-import ecommerce.backend.com.model.Category;
 import ecommerce.backend.com.model.Product;
 import org.springframework.data.domain.Page;
 

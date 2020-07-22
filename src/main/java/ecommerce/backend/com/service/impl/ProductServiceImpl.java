@@ -42,4 +42,14 @@ public class ProductServiceImpl implements ProductService {
     public Product save(Product product) {
         return productRepository.save(product);
     }
+
+    @Override
+    public boolean deleteProductById(Long id) {
+        try {
+            productRepository.deleteById(id);            
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

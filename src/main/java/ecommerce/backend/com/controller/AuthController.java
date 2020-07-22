@@ -1,6 +1,5 @@
 package ecommerce.backend.com.controller;
 
-import ecommerce.backend.com.model.CustomUserDetails;
 import ecommerce.backend.com.payload.request.LoginRequest;
 import ecommerce.backend.com.payload.response.LoginResponse;
 import ecommerce.backend.com.security.jwt.JwtUtils;

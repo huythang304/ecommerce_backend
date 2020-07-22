@@ -1,6 +1,5 @@
 package ecommerce.backend.com.controller;
 
-import ecommerce.backend.com.model.Category;
 import ecommerce.backend.com.model.Product;
 import ecommerce.backend.com.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 /**
