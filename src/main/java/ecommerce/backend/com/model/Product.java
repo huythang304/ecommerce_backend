@@ -34,6 +34,10 @@ public class Product implements Serializable {
     @Column(name = "updateDate", length = 19)
     private Date updateDate;
 
+    @JoinColumn(name = "categoryId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category category;
+
     @Column(name = "status")
     private Integer status;
 }
