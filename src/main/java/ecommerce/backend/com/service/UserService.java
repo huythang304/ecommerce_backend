@@ -55,4 +55,20 @@ public interface UserService {
      * @return Page<User>
      */
     Page<User> findAllUserByEmail(String search, Integer page, Integer size);
+
+    /**
+     * Thêm mới/Cập nhật User
+     *
+     * @param user User Thông tin user
+     * @return User
+     */
+    User save(User user);
+
+    /**
+     * Xóa người dùng theo ID
+     *
+     * @param id Long ID User cần xóa
+     * @return true - nếu xóa thành công /false - nếu xóa không thành công
+     */
+    boolean deleteUserById(Long id);
 }

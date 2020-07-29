@@ -66,4 +66,6 @@ public interface CategoryService {
 	 * @return Page<Category>1
 	 */
 	Page<Category> findAllByNameAndPage(String search, Integer page, Integer size);
+
+	List<Integer> findAllChildId(Integer id);
 }

@@ -4,5 +4,5 @@
       "name": "ecommerce.app.jwtSecret",
       "type": "java.lang.String",
       "description": "Description for ecommerce.app.jwtSecret."
-  }
-] }
+    }
+  ] }

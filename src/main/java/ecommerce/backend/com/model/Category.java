@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Huy Thắng on 26/06/2020
@@ -33,6 +34,10 @@ public class Category implements Serializable {
     @Column(name = "metaTitle", unique = true, nullable = false, length = 150)
     private String metaTitle;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    private Category categoryParent;
+
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "createDate", length = 19)
@@ -40,6 +45,9 @@ public class Category implements Serializable {
 
     @Column(name = "status")
     private Integer status;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoryParent")
+    private List<Category> categoryList;
 
     @PrePersist
     public void prePersist() {

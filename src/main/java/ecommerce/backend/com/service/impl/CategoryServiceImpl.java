@@ -69,4 +69,8 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findByNameContainingOrderByIdAsc(search, pageable);
     }
 
+    @Override
+    public List<Integer> findAllChildId(Integer id) {
+        return categoryRepository.findAllCategoryIdChild(id);
+    }
 }

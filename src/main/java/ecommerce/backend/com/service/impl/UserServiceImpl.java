@@ -52,4 +52,19 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return userRepository.findAllByEmailContaining(search, pageable);
     }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public boolean deleteUserById(Long id) {
+        try {
+            userRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

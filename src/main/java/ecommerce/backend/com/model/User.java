@@ -1,5 +1,6 @@
 package ecommerce.backend.com.model;
 
+import ecommerce.backend.com.util.DateUtils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,4 +45,14 @@ public class User implements Serializable {
 
     @Column(name = "status")
     private Boolean status;
+
+    @PrePersist
+    public void prePersist() {
+        if (createDate == null) {
+            createDate = DateUtils.getCurrentDate();
+        }
+        if (status == null) {
+            status = true;
+        }
+    }
 }

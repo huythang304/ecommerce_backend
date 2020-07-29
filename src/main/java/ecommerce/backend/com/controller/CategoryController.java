@@ -42,6 +42,11 @@ public class CategoryController {
             return new ResponseEntity<>(categoryService.findAllByNameAndPage(search, page, size), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/child_category/{id}")
+    public ResponseEntity<List<Integer>> getAllChildCategoryId(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(categoryService.findAllChildId(id), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/categories/active")
     public ResponseEntity<List<Category>> getAllActiveCategory() {
         return new ResponseEntity<>(categoryService.findAllByStatus(1), HttpStatus.OK);
