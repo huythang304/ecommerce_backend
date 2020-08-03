@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 03, 2020 lúc 10:13 AM
+-- Thời gian đã tạo: Th8 03, 2020 lúc 11:05 AM
 -- Phiên bản máy phục vụ: 10.4.13-MariaDB
 -- Phiên bản PHP: 7.4.8
 
@@ -32,10 +32,8 @@ CREATE TABLE `address` (
   `userId` bigint(20) NOT NULL,
   `name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `stateid` int(11) NOT NULL,
-  `city` int(11) NOT NULL,
-  `district` int(11) NOT NULL,
-  `address` int(11) NOT NULL,
+  `wardId` int(11) DEFAULT NULL,
+  `address` text COLLATE utf8_unicode_ci NOT NULL,
   `logistics_status` bit(1) NOT NULL,
   `status` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -62,7 +60,7 @@ CREATE TABLE `category` (
 --
 
 CREATE TABLE `city` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `code` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -143,10 +141,10 @@ INSERT INTO `city` (`id`, `name`, `code`) VALUES
 --
 
 CREATE TABLE `district` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `prefix` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cityId` int(10) UNSIGNED DEFAULT NULL
+  `cityId` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -924,10 +922,10 @@ CREATE TABLE `user` (
 --
 
 CREATE TABLE `ward` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `prefix` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `districtId` int(10) UNSIGNED DEFAULT NULL
+  `districtId` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -12312,13 +12310,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT cho bảng `city`
 --
 ALTER TABLE `city`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT cho bảng `district`
 --
 ALTER TABLE `district`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=710;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=710;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
@@ -12348,7 +12346,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `ward`
 --
 ALTER TABLE `ward`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11284;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11284;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
