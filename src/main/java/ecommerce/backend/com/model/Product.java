@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -24,15 +25,11 @@ public class Product implements Serializable {
     @Column(name = "id", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    @Column(name = "createDate", length = 19)
-    private Date createDate;
+    @Column(name = "createTime", length = 19)
+    private Timestamp createTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    @Column(name = "updateDate", length = 19)
-    private Date updateDate;
+    @Column(name = "updateTime", length = 19)
+    private Timestamp updateTime;
 
     @JoinColumn(name = "categoryId", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER)

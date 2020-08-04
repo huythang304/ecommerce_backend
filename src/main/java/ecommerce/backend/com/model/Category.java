@@ -3,12 +3,11 @@ package ecommerce.backend.com.model;
 import ecommerce.backend.com.util.DateUtils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -21,6 +20,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Category implements Serializable {
+
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,13 +37,11 @@ public class Category implements Serializable {
     private String metaTitle;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @JoinColumn(name = "parentId", referencedColumnName = "id")
     private Category categoryParent;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    @Column(name = "createDate", length = 19)
-    private Date createDate;
+    @Column(name = "createTime", length = 19)
+    private Timestamp createTime;
 
     @Column(name = "status")
     private Integer status;
@@ -51,8 +51,8 @@ public class Category implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        if (createDate == null) {
-            createDate = DateUtils.getCurrentDate();
+        if (createTime == null) {
+            createTime = DateUtils.getCurrentDate();
         }
         if (status == null) {
             status = 1;
