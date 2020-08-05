@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "role")
+@Table(name = "role", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 @Data
 @NoArgsConstructor
 public class Role implements Serializable {

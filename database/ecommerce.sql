@@ -46,12 +46,21 @@ CREATE TABLE `address` (
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
-  `createTime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createTime` datetime  NOT NULL DEFAULT current_timestamp(),
   `metaTitle` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `status` int(11) DEFAULT 1,
   `parentId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `category`
+--
+
+INSERT INTO `category` (`id`, `createTime`, `metaTitle`, `name`, `status`, `parentId`) VALUES
+(1, '2020-08-04 16:18:00', 'dien-thoai', 'Điện Thoại', 1, NULL),
+(2, '2020-08-04 16:19:55', 'may-tinh-bang', 'Tablet', 1, NULL),
+(3, '2020-08-04 16:19:55', 'phu-kien', 'Phụ Kiện', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -890,12 +899,12 @@ CREATE TABLE `order` (
   `name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `address` text COLLATE utf8_unicode_ci NOT NULL,
-  `createTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `cancelledTime` timestamp NULL DEFAULT NULL,
-  `confirmTime` timestamp NULL DEFAULT NULL,
-  `shipped_time` timestamp NULL DEFAULT NULL,
-  `payTime` timestamp NULL DEFAULT NULL,
-  `completeTime` timestamp NULL DEFAULT NULL,
+  `createTime` datetime  NOT NULL DEFAULT current_timestamp(),
+  `cancelledTime` datetime  NULL DEFAULT NULL,
+  `confirmTime` datetime  NULL DEFAULT NULL,
+  `shipped_time` datetime  NULL DEFAULT NULL,
+  `payTime` datetime  NULL DEFAULT NULL,
+  `completeTime` datetime  NULL DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -961,7 +970,7 @@ CREATE TABLE `role` (
 
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL,
-  `createDate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createDate` datetime  NOT NULL DEFAULT current_timestamp(),
   `email` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,

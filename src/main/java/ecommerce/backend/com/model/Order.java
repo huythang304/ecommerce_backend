@@ -2,9 +2,11 @@ package ecommerce.backend.com.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,23 +37,35 @@ public class Order implements java.io.Serializable {
     @Column(name = "address", nullable = false, length = 65535)
     private String address;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "createTime", nullable = false, length = 19)
     private Timestamp createTime;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "cancelledTime", length = 19)
-    private Timestamp cancelledTime;
+    private Date cancelledTime;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "confirmTime", length = 19)
-    private Timestamp confirmTime;
+    private Date confirmTime;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "shipped_time", length = 19)
-    private Timestamp shippedTime;
+    private Date shippedTime;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "payTime", length = 19)
-    private Timestamp payTime;
+    private Date payTime;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "completeTime", length = 19)
-    private Timestamp completeTime;
+    private Date completeTime;
 
     @Column(name = "status", nullable = false)
     private int status;

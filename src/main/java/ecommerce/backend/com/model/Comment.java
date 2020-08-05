@@ -2,9 +2,11 @@ package ecommerce.backend.com.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,8 +31,10 @@ public class Comment {
     @Column(name = "content", nullable = false, length = 65535)
     private String content;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "createTime", nullable = false, length = 19)
-    private Timestamp createTime;
+    private Date createTime;
 
     @Column(name = "status", nullable = false)
     private boolean status;

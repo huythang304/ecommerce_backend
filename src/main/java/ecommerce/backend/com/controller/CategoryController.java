@@ -62,7 +62,8 @@ public class CategoryController {
 
     @PutMapping(value = "/category/{id}")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<Category> updateCategoryById(@PathVariable("id") Integer id, @Valid @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategoryById(@PathVariable("id") Integer id,
+                                                       @Valid @RequestBody Category category) {
         Optional<Category> categoryOptional = categoryService.findCategoryById(id);
         if (categoryOptional.isPresent()) {
             return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);

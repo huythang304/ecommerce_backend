@@ -25,11 +25,15 @@ public class Product implements Serializable {
     @Column(name = "id", unique = true, nullable = false, updatable = false)
     private Long id;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "createTime", length = 19)
-    private Timestamp createTime;
+    private Date createTime;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "updateTime", length = 19)
-    private Timestamp updateTime;
+    private Date updateTime;
 
     @JoinColumn(name = "categoryId", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER)

@@ -3,11 +3,13 @@ package ecommerce.backend.com.model;
 import ecommerce.backend.com.util.DateUtils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +18,8 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "category", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
+@Table(name = "category", uniqueConstraints = { @UniqueConstraint(columnNames = "name"),
+        @UniqueConstraint(columnNames = "metaTitle") })
 @Data
 @NoArgsConstructor
 public class Category implements Serializable {
@@ -40,8 +43,10 @@ public class Category implements Serializable {
     @JoinColumn(name = "parentId", referencedColumnName = "id")
     private Category categoryParent;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "createTime", length = 19)
-    private Timestamp createTime;
+    private Date createTime;
 
     @Column(name = "status")
     private Integer status;
