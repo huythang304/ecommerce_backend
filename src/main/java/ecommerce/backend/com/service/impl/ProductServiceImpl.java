@@ -1,6 +1,5 @@
 package ecommerce.backend.com.service.impl;
 
-import ecommerce.backend.com.model.Category;
 import ecommerce.backend.com.model.Product;
 import ecommerce.backend.com.repository.ProductRepository;
 import ecommerce.backend.com.service.ProductService;

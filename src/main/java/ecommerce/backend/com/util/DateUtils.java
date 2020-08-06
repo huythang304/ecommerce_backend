@@ -2,7 +2,6 @@ package ecommerce.backend.com.util;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class DateUtils {
 

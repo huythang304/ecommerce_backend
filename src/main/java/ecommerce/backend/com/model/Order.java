@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class Order implements java.io.Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "createTime", nullable = false, length = 19)
-    private Timestamp createTime;
+    private Date createTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
@@ -54,7 +53,7 @@ public class Order implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    @Column(name = "shipped_time", length = 19)
+    @Column(name = "shippedTime", length = 19)
     private Date shippedTime;
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @Table(name = "comment")
 @Data
 @NoArgsConstructor
-public class Comment {
+public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

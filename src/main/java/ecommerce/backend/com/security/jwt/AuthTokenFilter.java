@@ -1,6 +1,5 @@
 package ecommerce.backend.com.security.jwt;
 
-import ecommerce.backend.com.service.UserService;
 import ecommerce.backend.com.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

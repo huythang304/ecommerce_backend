@@ -3,7 +3,6 @@ package ecommerce.backend.com.service;
 import ecommerce.backend.com.model.User;
 import org.springframework.data.domain.Page;
 
-import java.awt.print.Pageable;
 import java.util.Optional;
 
 /**

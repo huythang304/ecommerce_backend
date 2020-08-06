@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * @author Huy Thắng on 26/06/2020
@@ -17,6 +15,8 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 public class OrderDetailPK implements java.io.Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "orderId", nullable = false)
     private long orderId;
