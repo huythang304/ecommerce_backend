@@ -50,9 +50,17 @@ CREATE TABLE `category` (
   `metaTitle` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `status` int(11) DEFAULT NULL,
-  `parent_id` int(11) DEFAULT NULL
+  `parentId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `category`
+--
+
+INSERT INTO `category` (`id`, `createTime`, `metaTitle`,`name`, `status`, `parentId`) VALUES
+(1, '2020-08-06 20:14:09', 'dien-thoai', 'Điện Thoại', 1 , NULL),
+(2, '2020-08-06 20:15:29', 'may-tinh-bang', 'Tablet', 1 , NULL),
+(3, '2020-08-06 20:16:21', 'phu-kien', 'Phụ Kiện', 1 , NULL);
 -- --------------------------------------------------------
 
 --
