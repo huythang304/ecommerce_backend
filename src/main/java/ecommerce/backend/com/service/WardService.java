@@ -1,8 +1,8 @@
 package ecommerce.backend.com.service;
 
-import ecommerce.backend.com.payload.request.WardRequest;
-
 import java.util.List;
+
+import ecommerce.backend.com.payload.response.WardResponse;
 
 /**
  * @author Huy Thắng on 26/06/2020
@@ -16,5 +16,5 @@ public interface WardService {
      * @param districtId Integer
      * @return List<WardRequest> - danh sách ward theo district ID;
      */
-    List<WardRequest> findAllByDistrictId(Integer districtId);
+    List<WardResponse> findAllByDistrictId(Integer districtId);
 }

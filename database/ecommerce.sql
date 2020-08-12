@@ -34,8 +34,7 @@ CREATE TABLE `address` (
   `phone` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `wardId` int(11) NOT NULL,
   `address` text COLLATE utf8_unicode_ci NOT NULL,
-  `logistics_status` bit(1) NOT NULL,
-  `status` bit(1) NOT NULL
+  `logistics_status` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------

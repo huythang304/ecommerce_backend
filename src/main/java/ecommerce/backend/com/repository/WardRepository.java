@@ -1,7 +1,8 @@
 package ecommerce.backend.com.repository;
 
 import ecommerce.backend.com.model.Ward;
-import ecommerce.backend.com.payload.request.WardRequest;
+import ecommerce.backend.com.payload.response.WardResponse;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,5 @@ import java.util.List;
 @Repository
 public interface WardRepository extends JpaRepository<Ward, Integer> {
 
-    List<WardRequest> findByDistrict_IdOrderByNameAsc(Integer districtId);
+    List<WardResponse> findByDistrict_IdOrderByNameAsc(Integer districtId);
 }

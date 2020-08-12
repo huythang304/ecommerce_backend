@@ -1,6 +1,6 @@
 package ecommerce.backend.com.service.impl;
 
-import ecommerce.backend.com.payload.request.WardRequest;
+import ecommerce.backend.com.payload.response.WardResponse;
 import ecommerce.backend.com.repository.WardRepository;
 import ecommerce.backend.com.service.WardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class WardServiceImpl implements WardService {
     }
 
     @Override
-    public List<WardRequest> findAllByDistrictId(Integer districtId) {
+    public List<WardResponse> findAllByDistrictId(Integer districtId) {
         return wardRepository.findByDistrict_IdOrderByNameAsc(districtId);
     }
 }

@@ -1,4 +1,4 @@
-package ecommerce.backend.com.payload.request;
+package ecommerce.backend.com.payload.response;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
  * @project ecommerce_backend
  */
 
-public interface WardRequest {
-
+public interface DistrictResponse {
+    
     Integer getId();
 
     @Value("#{target.prefix + ' ' + target.name}")

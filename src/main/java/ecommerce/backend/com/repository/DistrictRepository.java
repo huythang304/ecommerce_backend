@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import ecommerce.backend.com.model.District;
-import ecommerce.backend.com.payload.request.DistrictRequest;
+import ecommerce.backend.com.payload.response.DistrictResponse;
+
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,6 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DistrictRepository extends JpaRepository<District, Integer> {
 
-    List<DistrictRequest> findAllByCity_IdOrderByNameAsc(Integer cityId);
+    List<DistrictResponse> findAllByCity_IdOrderByNameAsc(Integer cityId);
     
 }

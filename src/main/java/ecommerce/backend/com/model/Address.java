@@ -38,9 +38,6 @@ public class Address implements Serializable {
     @Column(name = "logistics_status", nullable = false)
     private boolean logisticsStatus;
 
-    @Column(name = "status", nullable = false)
-    private boolean status;
-
     @JoinColumn(name = "wardId", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Ward ward;

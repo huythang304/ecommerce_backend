@@ -2,7 +2,7 @@ package ecommerce.backend.com.service;
 
 import java.util.List;
 
-import ecommerce.backend.com.payload.request.DistrictRequest;
+import ecommerce.backend.com.payload.response.DistrictResponse;
 
 /**
  * @author Huy Thắng on 26/06/2020
@@ -16,5 +16,5 @@ public interface DistrictService {
      * @param cityId Integer
      * @return List<DistrictRequest> - Danh sách District
      */
-    List<DistrictRequest> findAllDistrictByCity(Integer cityId);
+    List<DistrictResponse> findAllDistrictByCity(Integer cityId);
 }

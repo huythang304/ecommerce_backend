@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import ecommerce.backend.com.model.City;
-import ecommerce.backend.com.payload.request.CityRequest;
+import ecommerce.backend.com.payload.response.CityResponse;
+
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,6 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CityRepository extends JpaRepository<City, Integer> {
 
-    List<CityRequest> findByOrderByNameAsc();
+    List<CityResponse> findByOrderByNameAsc();
 
 }

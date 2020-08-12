@@ -1,11 +1,11 @@
-package ecommerce.backend.com.payload.request;
+package ecommerce.backend.com.payload.response;
 
 /**
  * @author Huy Thắng on 26/06/2020
  * @project ecommerce_backend
  */
 
-public interface CityRequest {
+public interface CityResponse {
     
     Integer getId();
 

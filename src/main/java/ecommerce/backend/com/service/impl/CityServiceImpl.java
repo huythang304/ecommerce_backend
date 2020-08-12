@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ecommerce.backend.com.payload.request.CityRequest;
+import ecommerce.backend.com.payload.response.CityResponse;
 import ecommerce.backend.com.repository.CityRepository;
 import ecommerce.backend.com.service.CityService;
 
@@ -25,7 +25,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<CityRequest> findAllCity() {
+    public List<CityResponse> findAllCity() {
         return cityRepository.findByOrderByNameAsc();
     }
     
