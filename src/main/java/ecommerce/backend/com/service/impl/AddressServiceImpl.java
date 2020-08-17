@@ -33,13 +33,17 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public boolean deleteAddressById(Long id) {
-        // TODO Auto-generated method stub
-        return false;
+        try {
+            addressRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public Optional<Address> findAddressById(Long id) {
         return addressRepository.findById(id);
     }
-    
+
 }

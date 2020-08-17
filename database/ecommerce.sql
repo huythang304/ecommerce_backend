@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 03, 2020 lúc 05:39 PM
+-- Thời gian đã tạo: Th8 17, 2020 lúc 05:55 AM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.4.6
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 -- Cơ sở dữ liệu: `ecommerce`
 --
 
+DELIMITER $$
+--
+-- Thủ tục
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateDefaultAddress` (IN `userId` BIGINT, IN `addressId` BIGINT, OUT `result` BIT)  BEGIN
+        DECLARE exit handler FOR SQLEXCEPTION
+        BEGIN
+		ROLLBACK;
+		SET result=0;
+        END;
+	START TRANSACTION;
+		UPDATE address SET logistics_status = 1 WHERE userId = userId AND id = addressId;
+        UPDATE address SET logistics_status = 0 WHERE userId = userId AND id != addressId;
+    	SET result=1;
+	-- if no errors happened yet, commit transaction
+	COMMIT;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -34,7 +54,8 @@ CREATE TABLE `address` (
   `phone` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `wardId` int(11) NOT NULL,
   `address` text COLLATE utf8_unicode_ci NOT NULL,
-  `logistics_status` bit(1) NOT NULL
+  `logistics_status` bit(1) NOT NULL,
+  `status` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -56,10 +77,11 @@ CREATE TABLE `category` (
 -- Đang đổ dữ liệu cho bảng `category`
 --
 
-INSERT INTO `category` (`id`, `createTime`, `metaTitle`,`name`, `status`, `parentId`) VALUES
-(1, '2020-08-06 20:14:09', 'dien-thoai', 'Điện Thoại', 1 , NULL),
-(2, '2020-08-06 20:15:29', 'may-tinh-bang', 'Tablet', 1 , NULL),
-(3, '2020-08-06 20:16:21', 'phu-kien', 'Phụ Kiện', 1 , NULL);
+INSERT INTO `category` (`id`, `createTime`, `metaTitle`, `name`, `status`, `parentId`) VALUES
+(1, '2020-08-06 20:14:09', 'dien-thoai', 'Điện Thoại', NULL, NULL),
+(2, '2020-08-06 20:15:29', 'may-tinh-bang', 'Tablet', 1, NULL),
+(3, '2020-08-06 20:16:21', 'phu-kien', 'Phụ Kiện', 1, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -898,11 +920,11 @@ CREATE TABLE `order` (
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `address` text COLLATE utf8_unicode_ci NOT NULL,
   `createTime` datetime NOT NULL DEFAULT current_timestamp(),
-  `cancelledTime` datetime NULL DEFAULT NULL,
-  `confirmTime` datetime NULL DEFAULT NULL,
-  `shippedTime` datetime NULL DEFAULT NULL,
-  `payTime` datetime NULL DEFAULT NULL,
-  `completeTime` datetime NULL DEFAULT NULL,
+  `cancelledTime` datetime DEFAULT NULL,
+  `confirmTime` datetime DEFAULT NULL,
+  `shippedTime` datetime DEFAULT NULL,
+  `payTime` datetime DEFAULT NULL,
+  `completeTime` datetime DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -939,7 +961,7 @@ CREATE TABLE `product` (
 -- Cấu trúc bảng cho bảng `rate`
 --
 
-CREATE TABLE `rate` (	
+CREATE TABLE `rate` (
   `id` bigint(20) NOT NULL,
   `productId` bigint(20) NOT NULL,
   `userId` bigint(20) NOT NULL,
@@ -968,7 +990,7 @@ CREATE TABLE `role` (
 
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL,
-  `createDate` datetime DEFAULT current_timestamp() ,
+  `createDate` datetime DEFAULT current_timestamp(),
   `email` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
@@ -12292,7 +12314,9 @@ INSERT INTO `ward` (`id`, `name`, `prefix`, `districtId`) VALUES
 -- Chỉ mục cho bảng `address`
 --
 ALTER TABLE `address`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `address_ibfk_1` (`wardId`),
+  ADD KEY `address_ibfk_2` (`userId`);
 
 --
 -- Chỉ mục cho bảng `category`
@@ -12312,37 +12336,46 @@ ALTER TABLE `city`
 -- Chỉ mục cho bảng `comment`
 --
 ALTER TABLE `comment`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comment_ibfk_1` (`parentId`),
+  ADD KEY `comment_ibfk_2` (`userId`),
+  ADD KEY `comment_ibfk_3` (`productId`);
 
 --
 -- Chỉ mục cho bảng `district`
 --
 ALTER TABLE `district`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `district_ibfk_1` (`cityId`);
 
 --
 -- Chỉ mục cho bảng `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_ibfk_1` (`userId`);
 
 --
 -- Chỉ mục cho bảng `order_detail`
 --
 ALTER TABLE `order_detail`
-  ADD PRIMARY KEY (`orderId`,`productId`);
+  ADD PRIMARY KEY (`orderId`,`productId`),
+  ADD KEY `order_detail_ibfk_2` (`productId`);
 
 --
 -- Chỉ mục cho bảng `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_ibfk_1` (`categoryId`);
 
 --
 -- Chỉ mục cho bảng `rate`
 --
-ALTER TABLE `rate`	
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `rate`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rate_ibfk_1` (`userId`),
+  ADD KEY `rate_ibfk_2` (`productId`);
 
 --
 -- Chỉ mục cho bảng `role`
@@ -12356,13 +12389,15 @@ ALTER TABLE `role`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
-  ADD UNIQUE KEY `UK_589idila9li6a4arw1t8ht1gx` (`phone`);
+  ADD UNIQUE KEY `UK_589idila9li6a4arw1t8ht1gx` (`phone`),
+  ADD KEY `user_ibfk_1` (`roleId`);
 
 --
 -- Chỉ mục cho bảng `ward`
 --
 ALTER TABLE `ward`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ward_ibfk_1` (`districtId`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
@@ -12378,13 +12413,13 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `city`
 --
 ALTER TABLE `city`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT cho bảng `comment`
@@ -12396,7 +12431,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `district`
 --
 ALTER TABLE `district`
-  MODIFY `id` int(11)   NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=710;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
@@ -12432,7 +12467,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `ward`
 --
 ALTER TABLE `ward`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11284;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -12442,18 +12477,15 @@ ALTER TABLE `ward`
 -- Các ràng buộc cho bảng `address`
 --
 ALTER TABLE `address`
-  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`wardId`) REFERENCES `ward` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `address`
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`wardId`) REFERENCES `ward` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -12472,8 +12504,7 @@ ALTER TABLE `order`
 -- Các ràng buộc cho bảng `order_detail`
 --
 ALTER TABLE `order_detail`
-  ADD CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `order_detail`
+  ADD CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `product` (`id`);
 
 --
@@ -12482,13 +12513,11 @@ ALTER TABLE `order_detail`
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`);
 
-
 --
 -- Các ràng buộc cho bảng `rate`
 --
 ALTER TABLE `rate`
-  ADD CONSTRAINT `rate_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `rate`
+  ADD CONSTRAINT `rate_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `rate_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -12503,8 +12532,6 @@ ALTER TABLE `user`
 ALTER TABLE `ward`
   ADD CONSTRAINT `ward_ibfk_1` FOREIGN KEY (`districtId`) REFERENCES `district` (`id`) ON DELETE CASCADE;
 COMMIT;
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
